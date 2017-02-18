@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+ 
+<hibernate-configuration>
+
+    <session-factory>
+        <!-- Database connection settings -->
+
+        <!-- Database encoding -->
+        <property name="connection.CharSet">utf8</property>
+        <property name="connection.characterEncoding">utf8</property>
+        <property name="connection.useUnicode">true</property>
+        
+        <!-- TimeZome format settings -->
+        <property name="connection.useJDBCCompliantTimezoneShift">true</property>
+        <property name="connection.useLegacyDatetimeCode">false</property>
+        <property name="connection.serverTimezone">UTC</property>
+        
+        <!-- Database engine -->
+        <property name="connection.sessionVariables">storage_engine=InnoDB</property>
+        
+        <!-- JDBC connection pool (use the built-in) -->
+        <property name="connection.pool_size">15</property>
+
+        <!-- Disable the second-level cache  -->
+        <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
+        
+        <!-- Echo all executed SQL to stdout -->
+        <property name="show_sql">true</property>
+
+        <!-- Drop the existing tables and create new one -->
+        <property name="hbm2ddl.auto">update</property>
+ 
+        <!-- Mention here all the model classes along with their package name -->
+ 		<mapping class="ru.coffeeplanter.newsfeed.data.entities.News" />
+ 		<mapping class="ru.coffeeplanter.newsfeed.data.entities.NewsCategory" />
+ 		 
+    </session-factory>
+</hibernate-configuration>

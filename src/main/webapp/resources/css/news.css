@@ -1,0 +1,166 @@
+@CHARSET "UTF-8";
+
+body {
+	background-color: #FFFFEE;
+	padding: 10px;
+}
+h1 {
+	margin-bottom: 40px;
+}
+div.new {
+	border: 1px solid black;
+	padding: 15px;
+	background-color: #FFFFCC;
+	margin-bottom: 20px;
+}
+div.date_published {
+	color: #999999;
+}
+div.footer {
+	margin-top: 20px;
+	margin-bottom: 50px;
+}
+div.header_buttons {
+	padding: 0px;
+	text-align: left;
+	margin-top: 20px;
+	margin-bottom: 25px;
+	margin-left: 0px;
+}
+div.header_buttons a {
+	margin-bottom: 60px;	
+}
+div.new_buttons {
+	text-align: right;
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
+input[type="text"] {
+	border: 1px solid black;
+	height: 40px;
+	padding-left: 10px;
+	padding-right: 10px;
+	margin-left: 0px;
+	font-size: 16px;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+input[type="radio"] {
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	border: 1px solid black;
+}
+.radio_text {
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+textarea {
+	border: 1px solid black;
+	margin-left: 0px;
+	padding: 10px;
+	font-size: 16px;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+div.category_select {
+	sdisplay: inline;
+	text-align: right;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-size: large;
+	background-attachment: scroll;
+	background-clip: border-box;
+	background-color: rgb(124,155,62);
+	background-image: url("../images/arrow.png");
+	background-origin: padding-box;
+	background-position: 96% 0px;
+	background-repeat: no-repeat;
+	background-size: auto auto;
+	font-family: sans-serif;
+	height: 29px;
+	line-height: 18.4px;
+	margin-bottom: 20px;
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-top: 30px;
+	overflow: hidden;
+	overflow-x: hidden;
+	overflow-y: hidden;
+	width: 240px;
+}
+div.category_select:hover {
+	background: rgb(232,95,76);
+	background-attachment: scroll;
+	background-clip: border-box;
+	background-image: url("../images/arrow.png");
+	background-origin: padding-box;
+	background-position: 96% 0px;
+	background-repeat: no-repeat;
+	background-size: auto auto;
+	cursor: pointer;
+}
+div.category_select:active {
+	background: rgb(152,15,0);
+	cursor: pointer;
+}
+select {
+	background-attachment: scroll;
+	font-size: large;
+	background-clip: border-box;
+	background-color: transparent;
+	background-image: none;
+	background-origin: padding-box;
+	background-position: 0% 0%;
+	background-repeat: repeat;
+	background-size: auto auto;
+	border-bottom-color: rgb(255, 255, 255);
+	border-bottom-style: none;
+	border-bottom-width: 0px;
+	border-image-outset: 0 0 0 0;
+	border-image-repeat: stretch stretch;
+	border-image-slice: 100% 100% 100% 100%;
+	border-image-source: none;
+	border-image-width: 1 1 1 1;
+	border-left-color: rgb(255, 255, 255);
+	border-left-style: none;
+	border-left-width: 0px;
+	border-right-color: rgb(255, 255, 255);
+	border-right-style: none;
+	border-right-width: 0px;
+	border-top-color: rgb(255, 255, 255);
+	border-top-style: none;
+	border-top-width: 0px;
+	color: rgb(255, 255, 255);
+	font-family: sans-serif;
+	font-size: 14px;
+	height: 29px;
+	line-height: 15px;
+	margin-bottom: 0px;
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-top: 0px;
+	padding-bottom: 5px;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top: 5px;
+	text-transform: none;
+	width: 268px;
+	-moz-border-bottom-colors: none;
+	-moz-border-left-colors: none;
+	-moz-border-right-colors: none;
+	-moz-border-top-colors: none;
+}
+select:hover {
+	cursor: pointer;
+}
+a.button {
+	color: #fff; /* цвет текста */
+	text-decoration: none; /* убирать подчёркивание у ссылок */
+	user-select: none; /* убирать выделение текста */
+	background: rgb(124,155,62); /* фон кнопки */
+	padding: .7em 1.5em; /* отступ от текста */
+	outline: none; /* убирать контур в Mozilla */
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	margin-left: 15px;
+}
+a.button:hover {
+	background: rgb(232,95,76); /* при наведении курсора мышки */
+}
+a.button:active {
+	background: rgb(152,15,0); /* при нажатии */
+}
