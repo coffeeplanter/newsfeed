@@ -13,7 +13,12 @@
 <body>
 
 	<div class="header">
-		<h1>Лента новостей</h1>
+		<h1>
+		<c:choose>
+		<c:when test="${!empty mainPage}">Лента новостей</c:when>
+		<c:otherwise><a href="<spring:url value="/"/>">Лента новостей</a></c:otherwise>
+		</c:choose>
+		</h1>
 	</div>
 
 	<div class="header_buttons">
@@ -26,7 +31,7 @@
 						</c:forEach>
 					</select>
 				</div>
-				<form action="<spring:url value="/search"/>" id="search_news" method="get" accept-charset="UTF-8">
+				<form action="<spring:url value="/search"/>" id="search_news" method="post" accept-charset="UTF-8">
 				<input type="text" name="query" size="70" value="${param.query}">
 				<input type="radio" name="search_area" value="body" <c:if test="${empty param.search_area}">checked</c:if><c:if test="${param.search_area == 'body'}">checked</c:if>><span class="radio_text">По всему тексту</span>
 				<input type="radio" name="search_area" value="header" <c:if test="${param.search_area == 'header'}">checked</c:if>><span class="radio_text">По заголовкам</span>

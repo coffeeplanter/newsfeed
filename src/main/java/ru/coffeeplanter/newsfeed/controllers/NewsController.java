@@ -3,9 +3,16 @@ package ru.coffeeplanter.newsfeed.controllers;
 import java.beans.PropertyEditorSupport;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,8 +37,13 @@ public class NewsController {
 	
 	@RequestMapping("/")
 	public String showMainPage(Model model) {
-		final List<News> news = newsService.listNews();
+		final List<News> news = new ArrayList<News>();
+		for (Object o : newsService.listNews()) {
+			((News)o).setContent(((News)o).getContent().replaceAll("\n", "<br/>"));
+			news.add((News)o);
+		}
 		final List<NewsCategory> categories = newsService.listCategories();
+		model.addAttribute("mainPage", "true");
 		model.addAttribute("allNews", news);
 		model.addAttribute("allCategories", categories);
 		return "list";
@@ -39,23 +51,67 @@ public class NewsController {
 	
 	@RequestMapping(value="/category/{categoryId}")
 	public String showNewsCategory(@PathVariable("categoryId") int categoryId, Model model) {
-		final List<News> news = newsService.listNewsByCategory(categoryId);
-		if (news != null) {
-			final List<NewsCategory> categories = newsService.listCategories();
-			model.addAttribute("allNews", news);
-			model.addAttribute("allCategories", categories);
-			model.addAttribute("categoryId", categoryId);
-			return "list";
+		final List<News> news = new ArrayList<News>();
+		for (Object o : newsService.listNewsByCategory(categoryId)) {
+			((News)o).setContent(((News)o).getContent().replaceAll("\n", "<br/>"));
+			news.add((News)o);
 		}
-		else {
-			return "redirect:/";
-		}
+		final List<NewsCategory> categories = newsService.listCategories();
+		model.addAttribute("allNews", news);
+		model.addAttribute("allCategories", categories);
+		model.addAttribute("categoryId", categoryId);
+		return "list";
 	}
 	
-	@RequestMapping("/search")
+	@RequestMapping(value="/search", method=RequestMethod.POST)
 	public String searchNews(@RequestParam("query") String query, @RequestParam("search_area") String area, Model model) {
 		
-		final List<News> news = newsService.listNews();
+		String[] queryBuffer = query.trim().split(" "); // Разделяем поисковый запрос на отдельные слова
+		Map<Integer, Integer> newsMap = new HashMap<>(); // Отображение для хранения id новости и частоты встречаемости искомых слов в ней
+		
+		// Цикл для перебора слов запроса
+		for (int h = 0; h < queryBuffer.length; h++) {
+			// Цикл для перебора новостей и определения частоты встречаемости слов
+			for (News n : newsService.listNews()) {
+				String[] buffer;
+				if (area.equals("header")) {
+					buffer = n.getHeader().trim().split("\\s");
+				} else {
+					buffer = n.getContent().trim().split("\\s");
+				}
+				for (int i = 0, j = 0; i < buffer.length; i++) {
+					if ((buffer[i].length() > 1) && (buffer[i].toLowerCase().contains(queryBuffer[h].toLowerCase()))) {
+						j++;
+						Integer k = n.getId();
+						if (k != null) {
+							if (newsMap.get(k) != null) {
+								newsMap.put(k, j > newsMap.get(k) ? j : newsMap.get(k) + j);
+							}
+							else {
+								newsMap.put(k, j);
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		// Сортировка записей отображения по значениям (т. е. по частоте встречаемости слов)
+		List<Entry<Integer, Integer>> list = new ArrayList<>(newsMap.entrySet());
+		Collections.sort(list, new Comparator<Entry<Integer, Integer>>() {
+	        @Override
+		        public int compare(Entry<Integer, Integer> e1, Entry<Integer, Integer> e2)
+		        {
+		            return (e2.getValue()).compareTo(e1.getValue());
+		        }
+		    });
+		 
+		// Построение списка новостей, отсортированных по частоте встречаемости слов
+		final List<News> news = new LinkedList<News>();
+		for (Entry<Integer, Integer> e: list) {
+			news.add(newsService.getNewsById(e.getKey()));
+		}
+		
 		final List<NewsCategory> categories = newsService.listCategories();
 		model.addAttribute("allNews", news);
 		model.addAttribute("allCategories", categories);
@@ -93,6 +149,7 @@ public class NewsController {
 			dateNew.setTime(news.getDate_published());
 			dateNew.set(Calendar.HOUR_OF_DAY, dateOld.get(Calendar.HOUR_OF_DAY));
 			dateNew.set(Calendar.MINUTE, dateOld.get(Calendar.MINUTE));
+			dateNew.set(Calendar.SECOND, dateOld.get(Calendar.SECOND));
 			news.setDate_published(dateNew.getTime());
 		}
 		NewsCategory newsCategory = newsService.getNewsCategoryById(news.getCategory().getId());
@@ -116,6 +173,11 @@ public class NewsController {
 	public String redirectToMainPage() {
 		return "redirect:/";
 	}
+	
+	@RequestMapping(value="/search", method=RequestMethod.GET)
+	public String redirectFromEmptySearchToMainPage() {
+		return "redirect:/";
+	}
 
 	@InitBinder
 	public void binder(WebDataBinder binder) {
@@ -127,6 +189,7 @@ public class NewsController {
 					Calendar calendarCurrent = Calendar.getInstance();
 					calendar.set(Calendar.HOUR_OF_DAY, calendarCurrent.get(Calendar.HOUR_OF_DAY));
 					calendar.set(Calendar.MINUTE, calendarCurrent.get(Calendar.MINUTE));
+					calendar.set(Calendar.SECOND, calendarCurrent.get(Calendar.SECOND));
 					setValue(calendar.getTime());
 				} catch (ParseException e) {
 					setValue(null);

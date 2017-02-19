@@ -7,6 +7,14 @@ body {
 h1 {
 	margin-bottom: 40px;
 }
+h1 a {
+	color: #000000;
+	text-decoration: none;
+}
+h1 a:hover {
+	color: #000000;
+	text-decoration: underline;
+}
 div.new {
 	border: 1px solid black;
 	padding: 15px;
@@ -15,6 +23,7 @@ div.new {
 }
 div.date_published {
 	color: #999999;
+	margin-bottom: 10px;
 }
 div.footer {
 	margin-top: 20px;

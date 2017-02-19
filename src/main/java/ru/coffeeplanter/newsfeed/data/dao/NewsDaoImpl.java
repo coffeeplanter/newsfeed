@@ -29,7 +29,6 @@ public class NewsDaoImpl implements NewsDao {
 	public List<News> listNews() {
 		List<News> result = new ArrayList<News>();
 		for (Object o : sessionFactory.getCurrentSession().createQuery("from News").getResultList()) {
-			((News)o).setContent(((News)o).getContent().replaceAll("\n", "<br/>"));
 			result.add((News)o);
 		}
 		Collections.sort(result, new Comparator<News>(){
