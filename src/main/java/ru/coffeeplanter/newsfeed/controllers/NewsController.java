@@ -38,9 +38,9 @@ public class NewsController {
 	@RequestMapping("/")
 	public String showMainPage(Model model) {
 		final List<News> news = new ArrayList<News>();
-		for (Object o : newsService.listNews()) {
-			((News)o).setContent(((News)o).getContent().replaceAll("\n", "<br/>"));
-			news.add((News)o);
+		for (News n : newsService.listNews()) {
+			n.setContent(n.getContent().replaceAll("\n", "<br/>"));
+			news.add(n);
 		}
 		final List<NewsCategory> categories = newsService.listCategories();
 		model.addAttribute("mainPage", "true");
@@ -52,9 +52,9 @@ public class NewsController {
 	@RequestMapping(value="/category/{categoryId}")
 	public String showNewsCategory(@PathVariable("categoryId") int categoryId, Model model) {
 		final List<News> news = new ArrayList<News>();
-		for (Object o : newsService.listNewsByCategory(categoryId)) {
-			((News)o).setContent(((News)o).getContent().replaceAll("\n", "<br/>"));
-			news.add((News)o);
+		for (News n : newsService.listNewsByCategory(categoryId)) {
+			n.setContent(n.getContent().replaceAll("\n", "<br/>"));
+			news.add(n);
 		}
 		final List<NewsCategory> categories = newsService.listCategories();
 		model.addAttribute("allNews", news);
@@ -109,7 +109,9 @@ public class NewsController {
 		// Построение списка новостей, отсортированных по частоте встречаемости слов
 		final List<News> news = new LinkedList<News>();
 		for (Entry<Integer, Integer> e: list) {
-			news.add(newsService.getNewsById(e.getKey()));
+			News n = newsService.getNewsById(e.getKey());
+			n.setContent(n.getContent().replaceAll("\n", "<br/>"));
+			news.add(n);
 		}
 		
 		final List<NewsCategory> categories = newsService.listCategories();
