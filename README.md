@@ -1,6 +1,7 @@
 # Newsfeed
 
 This is a news feed Java web application, demonstrating the basics of Spring MVC and Hibernate.
+Demo video is here: https://www.youtube.com/watch?v=WPtDe2DzVu8
 
 ## Features
 

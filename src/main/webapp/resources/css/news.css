@@ -15,7 +15,7 @@ h1 a:hover {
 	color: #000000;
 	text-decoration: underline;
 }
-div.new {
+div.news {
 	border: 1px solid black;
 	padding: 15px;
 	background-color: #FFFFCC;
@@ -39,7 +39,10 @@ div.header_buttons {
 div.header_buttons a {
 	margin-bottom: 60px;	
 }
-div.new_buttons {
+div.news_text {
+	margin-bottom: 35px;
+}
+div.news_buttons {
 	text-align: right;
 	margin-top: 20px;
 	margin-bottom: 10px;

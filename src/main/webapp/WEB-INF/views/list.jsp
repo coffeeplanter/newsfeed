@@ -43,7 +43,7 @@
 	</div>
 
 	<c:forEach items="${allNews}" var="news">
-		<div class="new">
+		<div class="news">
 		<div class="category">
 			<span><a href="<spring:url value="/category/"/>${news.category.id}">${news.category.name}</a></span>
 		</div>
@@ -54,10 +54,10 @@
 			<fmt:formatDate pattern="dd.MM.yyyy HH:mm" value="${news.date_published}" />
 		</div>
 		<div class="content">
-			<div class="new_text">
+			<div class="news_text">
 				${news.content}
 			</div>
-			<div class="new_buttons">
+			<div class="news_buttons">
 				<a href="<spring:url value="/edit/"/>${news.id}" class="button">Редактировать новость</a>
 				<a href="<spring:url value="/delete/"/>${news.id}" class="button">Удалить новость</a>
 			</div>
